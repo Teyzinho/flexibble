@@ -1,9 +1,9 @@
 export const NavLinks = [
-    { href: '/', key: 'Inspiration', text: 'Inspiration' },
-    { href: '/', key: 'Find Projects', text: 'Find Projects' },
-    { href: '/', key: 'Learn Development', text: 'Learn Development' },
-    { href: '/', key: 'Career Advancement', text: 'Career Advancement' },
-    { href: '/', key: 'Hire Developers', text: 'Hire Developers' }
+    { href: '/', key: 'Inspiration', text: 'Inspiração' },
+    { href: '/', key: 'Find Projects', text: 'Encontre Projetos' },
+    { href: '/', key: 'Learn Development', text: 'Aprenda Desenvolvimento' },
+    { href: '/', key: 'Career Advancement', text: 'Avanço de Carreira' },
+    { href: '/', key: 'Hire Developers', text: 'Contrate Desenvolvedores' }
   ];
   
   export const categoryFilters = [
@@ -24,57 +24,57 @@ export const NavLinks = [
   
   export const footerLinks = [
     {
-      title: 'For developers',
+      title: 'Para desenvolvedores',
       links: [
-        'Go Pro!',
-        'Explore development work',
-        'Development blog',
+        'Vire Pro!',
+        'Explore trabalho de dev',
+        'Blog de desenvolvimento',
         'Code podcast',
-        'Open-source projects',
-        'Refer a Friend',
-        'Code of conduct',
+        'Projetos open-source',
+        'Referêncie um amigo',
+        'Código de conduta',
       ],
     },
     {
-      title: 'Hire developers',
+      title: 'Contrate Desenvolvedores',
       links: [
-        'Post a job opening',
-        'Post a freelance project',
-        'Search for developers',
+        'Publique uma vaga de emprego',
+        'Publique um trabalho de freelance',
+        'Procure por Desenvolvedores',
       ],
     },
     {
-      title: 'Brands',
+      title: 'Marcas',
       links: [
-        'Advertise with us',
+        'Anuncie conosco',
       ],
     },
     {
-      title: 'Company',
+      title: 'Empresa',
       links: [
-        'About',
-        'Careers',
-        'Support',
+        'Sobre',
+        'Carreira',
+        'Suporte',
         'Media kit',
-        'Testimonials',
+        'Testemunhos',
         'API',
-        'Terms of service',
-        'Privacy policy',
-        'Cookie policy',
+        'Termos de serviço',
+        'Politica de privacidade',
+        'Politica de Cookies',
       ],
     },
     {
       title: 'Directories',
       links: [
-        'Development jobs',
-        'Developers for hire',
-        'Freelance developers for hire',
+        'Trabalho de desenvolvedores',
+        'Desenvolvedores para contratar',
+        'Desenvolvedores para contratar Freelance',
         'Tags',
-        'Places',
+        'Lugares',
       ],
     },
     {
-      title: 'Development assets',
+      title: 'Assets de Desenvolvimento',
       links: [
         'Code Marketplace',
         'GitHub Marketplace',
@@ -83,14 +83,14 @@ export const NavLinks = [
       ],
     },
     {
-      title: 'Development Resources',
+      title: 'Recursos de desenvolvimento',
       links: [
         'Freelancing',
-        'Development Hiring',
-        'Development Portfolio',
-        'Development Education',
-        'Creative Process',
-        'Development Industry Trends',
+        'Contratação de Desenvolvedor',
+        'Portfolio de Desenvolvedor',
+        'Estudos de Desenvolvedor',
+        'Processo Criativo',
+        'Tendências da Indústria de Desenvolvimento',
       ],
     },
   ];
