@@ -2,8 +2,11 @@
 
 import { SessionInterface } from "@/common.types";
 import Image from "next/image";
-import { ChangeEvent } from "react";
+import { ChangeEvent, useState } from "react";
 import FormField from "./FormField";
+import { categoryFilters } from "@/constants";
+import CustomMenu from "./CustomMenu";
+import Button from "./Button";
 
 type Props = {
   type: string;
@@ -11,14 +14,55 @@ type Props = {
 };
 
 const ProjectForm = ({ type, session }: Props) => {
-  const form = {
+  const [form, setForm] = useState({
     title: "",
+    description: "",
     image: "",
+    liveSiteUrl: "",
+    githubUrl: "",
+    category: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleFormSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    setIsSubmitting(true)
+
+    try {
+      if(type === 'create'){
+        
+      }
+    } catch (error) {
+      
+    }
   };
 
-  const handleFormSubmit = (e: React.FormEvent) => {};
-  const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {};
-  const handleStateChange = (fieldName: string, value: string) => {};
+  const handleChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault(); //preve a página de fazer Re-load
+
+    const file = e.target.files?.[0];
+
+    if (!file) return;
+
+    if (!file.type.includes("image")) {
+      return alert("Por Favor envie uma arquivo de Imagem");
+    }
+
+    const reader = new FileReader();
+
+    reader.readAsDataURL(file);
+
+    reader.onload = () => {
+      const result = reader.result as string;
+
+      handleStateChange("image", result);
+    };
+  };
+
+  const handleStateChange = (fieldName: string, value: string) => {
+    setForm((prevState) => ({ ...prevState, [fieldName]: value }));
+  };
 
   return (
     <form onSubmit={handleFormSubmit} className="flexStart form">
@@ -71,14 +115,25 @@ const ProjectForm = ({ type, session }: Props) => {
         setState={(value) => handleStateChange("githubUrl", value)}
       />
 
-      {/* CustomInput */}
+      <CustomMenu
+        title="Categorias"
+        state={form.category}
+        filters={categoryFilters}
+        setState={(value) => handleStateChange("category", value)}
+      />
 
       <div className="flexStart w-full">
-            <button>
-                Criar
-            </button>
+        <Button
+          title={
+            isSubmitting
+              ? `${type === "create" ? "Criando" : "Editando"}`
+              : `${type === "create" ? "Criar" : "Editar"}`
+          }
+          type="submit"
+          leftIcon={isSubmitting ? "" : "/plus.svg"}
+          isSubmitting={isSubmitting}
+        />
       </div>
-
     </form>
   );
 };
