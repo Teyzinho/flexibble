@@ -11,14 +11,14 @@ import { createUser, getUser } from "./actions";
 // Configuração das opções do NextAuth
 export const authOptions: NextAuthOptions = {
     // Provedores de autenticação
-  providers: [
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-    }),
-  ],
+    providers: [
+      GoogleProvider({
+        clientId: process.env.GOOGLE_CLIENT_ID!,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      }),
+    ],
   // Especifica as configurações para JSON Web Tokens (JWTs).
-  jwt:{
+  jwt: {
     // Função para codificar (criar) o token
     encode: ({ secret, token }) => {
       const encodedToken = jsonwebtoken.sign(
@@ -33,11 +33,10 @@ export const authOptions: NextAuthOptions = {
       return encodedToken;
       },
       // Função para decodificar (verificar) o token
-      decode: async ({secret, token}) => {
-        const decodedToken = jsonwebtoken.verify(token!,secret) as JWT
-
-        return decodedToken
-      }
+      decode: async ({ secret, token }) => {
+        const decodedToken = jsonwebtoken.verify(token!, secret);
+        return decodedToken as JWT;
+      },
   },
   // Configurações de tema (opcional)
   theme: {
@@ -52,20 +51,18 @@ export const authOptions: NextAuthOptions = {
 
         try {
             // Obtém os dados do usuário a partir do email (usando a função getUser)
-            const data = await getUser(email) as {user?: UserProfile}
+            const data = await getUser(email) as { user?: UserProfile }
 
             // Cria uma nova sessão com os dados adicionais do usuário
             const newSession = {
-                ...session,
-                user: {
-                    ...session.user,
-                    ...data?.user
-                }
-            }
+              ...session,
+              user: {
+                ...session.user,
+                ...data?.user,
+              },
+            };
 
-      return newSession;
-
-
+            return newSession;
         } catch (error) {
             console.log("Error pegando data de Usuário",error)
             return session;
@@ -100,7 +97,7 @@ export const authOptions: NextAuthOptions = {
 
 // Função assíncrona para obter o usuário atualmente autenticado
 export async function getCurrentUser() {
-  const session = (await getServerSession(authOptions)) as SessionInterface;
+  const session = await getServerSession(authOptions) as SessionInterface;
 
   return session;
 }
