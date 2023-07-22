@@ -24,9 +24,9 @@ const client = new GraphQLClient(apiUrl); // Cria uma nova instância do GraphQL
 export const fetchToken = async () => {
   try {
     //Maneira de pegar o token usando Next Auth
-
     const response = await fetch(`${serverUrl}/api/auth/token`);
     return response.json();
+
   } catch (err) {
     throw err;
   }

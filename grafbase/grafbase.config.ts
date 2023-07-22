@@ -7,7 +7,7 @@ const User = g.model('User', {
   avatarUrl: g.url(),
   description: g.string().length({ min: 2, max: 1000 }).optional(),
   githubUrl: g.url().optional(),
-  linkedInUrl: g.url().optional(), 
+  linkedinUrl: g.url().optional(), 
   projects: g.relation(() => Project).list().optional(),
 }).auth((rules) => {
   rules.public().read()
@@ -30,7 +30,9 @@ const Project = g.model('Project', {
 const jwt = auth.JWT({
   issuer: 'grafbase',
   // secret:  g.env('NEXTAUTH_SECRET'),
-  secret:  process.env.NEXTAUTH_SECRET || '' ,
+  // secret:  process.env.NEXTAUTH_SECRET || '',
+  secret:  "PD2t0j8AVTLKvWBARVyQiMVjoFptqSZTK/EoV8W1g6A=",
+  // secret: "{{ env.NEXTAUTH_SECRET }}"
 })
 
 export default config({
