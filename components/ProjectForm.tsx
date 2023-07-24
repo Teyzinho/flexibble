@@ -1,29 +1,30 @@
 "use client";
 
-import { SessionInterface } from "@/common.types";
+import { ProjectInterface, SessionInterface } from "@/common.types";
 import Image from "next/image";
 import { ChangeEvent, FormEvent, useState } from "react";
 import FormField from "./FormField";
 import { categoryFilters } from "@/constants";
 import CustomMenu from "./CustomMenu";
 import Button from "./Button";
-import { createNewProject, fetchToken } from "@/lib/actions";
+import { createNewProject, fetchToken, updateProject } from "@/lib/actions";
 import { useRouter } from "next/navigation";
 
 type Props = {
   type: string;
   session: SessionInterface;
+  project?: ProjectInterface;
 };
 
-const ProjectForm = ({ type, session }: Props) => {
+const ProjectForm = ({ type, session, project }: Props) => {
   const router = useRouter();
   const [form, setForm] = useState({
-    title: "",
-    description: "",
-    image: "",
-    liveSiteUrl: "",
-    githubUrl: "",
-    category: "",
+    title: project?.title || "",
+    description: project?.description || "",
+    image: project?.image || "",
+    liveSiteUrl: project?.liveSiteUrl || "",
+    githubUrl: project?.githubUrl || "",
+    category: project?.category || "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -56,45 +57,54 @@ const ProjectForm = ({ type, session }: Props) => {
   const handleFormSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    setIsSubmitting(true)
+    setIsSubmitting(true);
 
     //pega o token de segurança
-    const { token } = await fetchToken()
+    const { token } = await fetchToken();
 
     try {
-        if (type === "create") {
-            await createNewProject(form, session?.user?.id, token)
+      if (type === "create") {
+        await createNewProject(form, session?.user?.id, token);
 
-            router.push("/")
-        }
+        router.push("/");
+      }
 
+      if (type === "edit") {
+        await updateProject(form, project?.id as string, token);
+
+        router.push("/");
+      }
     } catch (error) {
-        console.log(error);
-        alert(`Falha de ${type === "create" ? "create" : "edit"} um Projeto. Tente novamente!`);
+      console.log(error);
+      alert(
+        `Falha de ${
+          type === "create" ? "create" : "edit"
+        } um Projeto. Tente novamente!`
+      );
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
-}
+  };
 
   return (
     <form onSubmit={handleFormSubmit} className="flexStart form">
       <div className="flexStart form_image-container">
         <label htmlFor="poster" className="flexCenter form_image-label">
-          {!form.image && "Escolha um miniatura para o seu projeto"}
-          <input
-            id="image"
-            type="file"
-            accept="image/*"
-            required={type === "create"}
-            className="form_image-input"
-            onChange={handleChangeImage}
-          />
+          {!form.image && "Choose a poster for your project"}
         </label>
+        <input
+          id="image"
+          type="file"
+          accept="image/*"
+          required={type === "create" ? true : false}
+          className="form_image-input"
+          onChange={(e) => handleChangeImage(e)}
+        />
         {form.image && (
           <Image
             src={form?.image}
             className="sm:p-10 object-contain z-20"
-            alt="miniatura"
+            alt="image"
             fill
           />
         )}
