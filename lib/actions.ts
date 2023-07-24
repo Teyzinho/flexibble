@@ -4,6 +4,7 @@ import {
   createProjectMutation,
   createUserMutation,
   getUserQuery,
+  projectsQuery,
 } from "@/graphql";
 import { ProjectForm } from "@/common.types";
 //npx grafbase@0.24 dev
@@ -26,7 +27,6 @@ export const fetchToken = async () => {
     //Maneira de pegar o token usando Next Auth
     const response = await fetch(`${serverUrl}/api/auth/token`);
     return response.json();
-
   } catch (err) {
     throw err;
   }
@@ -102,4 +102,13 @@ export const createNewProject = async (
 
     return makeGraphQLRequest(createProjectMutation, variables);
   }
+};
+
+export const fetchAllProjects = async (
+  category?: string,
+  endcursor?: string
+) => {
+  client.setHeader("x-api-key", apiKey);
+
+  return makeGraphQLRequest(projectsQuery, { category, endcursor });
 };
