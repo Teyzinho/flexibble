@@ -10,13 +10,13 @@ import { createUser, getUser } from "./actions";
 
 // Configuração das opções do NextAuth
 export const authOptions: NextAuthOptions = {
-    // Provedores de autenticação
-    providers: [
-      GoogleProvider({
-        clientId: process.env.GOOGLE_CLIENT_ID!,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-      }),
-    ],
+  // Provedores de autenticação
+  providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
+  ],
   // Especifica as configurações para JSON Web Tokens (JWTs).
   jwt: {
     // Função para codificar (criar) o token
@@ -29,14 +29,14 @@ export const authOptions: NextAuthOptions = {
         },
         secret
       );
-      
+
       return encodedToken;
-      },
-      // Função para decodificar (verificar) o token
-      decode: async ({ secret, token }) => {
-        const decodedToken = jsonwebtoken.verify(token!, secret);
-        return decodedToken as JWT;
-      },
+    },
+    // Função para decodificar (verificar) o token
+    decode: async ({ secret, token }) => {
+      const decodedToken = jsonwebtoken.verify(token!, secret);
+      return decodedToken as JWT;
+    },
   },
   // Configurações de tema (opcional)
   theme: {
@@ -47,27 +47,26 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     // Callback de sessão (após o usuário fazer login)
     async session({ session }) {
-        const email = session?.user?.email as string;
+      const email = session?.user?.email as string;
 
-        try {
-            // Obtém os dados do usuário a partir do email (usando a função getUser)
-            const data = await getUser(email) as { user?: UserProfile }
+      try {
+        // Obtém os dados do usuário a partir do email (usando a função getUser)
+        const data = (await getUser(email)) as { user?: UserProfile };
 
-            // Cria uma nova sessão com os dados adicionais do usuário
-            const newSession = {
-              ...session,
-              user: {
-                ...session.user,
-                ...data?.user,
-              },
-            };
+        // Cria uma nova sessão com os dados adicionais do usuário
+        const newSession = {
+          ...session,
+          user: {
+            ...session.user,
+            ...data?.user,
+          },
+        };
 
-            return newSession;
-        } catch (error) {
-            console.log("Error pegando data de Usuário",error)
-            return session;
-        }
-
+        return newSession;
+      } catch (error) {
+        console.log("Error pegando data de Usuário", error);
+        return session;
+      }
     },
     // Callback de login (após o usuário fazer login)
     async signIn({ user }: { user: AdapterUser | User }) {
@@ -97,7 +96,7 @@ export const authOptions: NextAuthOptions = {
 
 // Função assíncrona para obter o usuário atualmente autenticado
 export async function getCurrentUser() {
-  const session = await getServerSession(authOptions) as SessionInterface;
+  const session = (await getServerSession(authOptions)) as SessionInterface;
 
   return session;
 }

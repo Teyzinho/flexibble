@@ -5,46 +5,44 @@ import { fetchAllProjects } from "@/lib/actions";
 import LoadMore from "@/components/LoadMore";
 
 type ProjectSearch = {
-    projectSearch: {
-      edges: { node: ProjectInterface }[];
-      pageInfo: {
-        hasPreviousPage: boolean;
-        hasNextPage: boolean;
-        startCursor: string;
-        endCursor: string;
-      };
-    },
-  }
+  projectSearch: {
+    edges: { node: ProjectInterface }[];
+    pageInfo: {
+      hasPreviousPage: boolean;
+      hasNextPage: boolean;
+      startCursor: string;
+      endCursor: string;
+    };
+  };
+};
 
-  type SearchParams = {
-    category?: string;
-    endcursor?: string;
-  }
+type SearchParams = {
+  category?: string;
+  endcursor?: string;
+};
 
-  type Props = {
-    searchParams : SearchParams
-  }
+type Props = {
+  searchParams: SearchParams;
+};
 
-  // Força o conteúdo a ser atualizado quando algo muda
-  export const dynamic = 'force-dynamic';
-  export const dynamicParams = true;
-  export const revalidate = 0;
+// Força o conteúdo a ser atualizado quando algo muda
+export const dynamic = "force-dynamic";
+export const dynamicParams = true;
+export const revalidate = 0;
 
-const Home = async ({searchParams : {category, endcursor}} : Props) => {
-  const data = await fetchAllProjects(category,endcursor) as ProjectSearch;
+const Home = async ({ searchParams: { category, endcursor } }: Props) => {
+  const data = (await fetchAllProjects(category, endcursor)) as ProjectSearch;
 
   const projectsToDisplay = data?.projectSearch?.edges || [];
 
-  if(projectsToDisplay.length === 0){
-    return(
-        <section className="flexStart flex-col paddings">
-            <Categories />
+  if (projectsToDisplay.length === 0) {
+    return (
+      <section className="flexStart flex-col paddings">
+        <Categories />
 
-            <p className="no-result-text text-center">
-                Nenhum projeto encontrado
-            </p>
-        </section>
-    )
+        <p className="no-result-text text-center">Nenhum projeto encontrado</p>
+      </section>
+    );
   }
 
   const pagination = data?.projectSearch?.pageInfo;
@@ -54,16 +52,16 @@ const Home = async ({searchParams : {category, endcursor}} : Props) => {
       <Categories />
 
       <section className="projects-grid">
-        {projectsToDisplay.map(({node}: {node:ProjectInterface}) => (
-            <ProjectCard
-                key={node.id}
-                id={node?.id}
-                image={node?.image}
-                title={node?.title}
-                name={node?.createdBy?.name}
-                avatarUrl={node?.createdBy?.avatarUrl}
-                userId={node?.createdBy?.id}
-            />
+        {projectsToDisplay.map(({ node }: { node: ProjectInterface }) => (
+          <ProjectCard
+            key={node.id}
+            id={node?.id}
+            image={node?.image}
+            title={node?.title}
+            name={node?.createdBy?.name}
+            avatarUrl={node?.createdBy?.avatarUrl}
+            userId={node?.createdBy?.id}
+          />
         ))}
       </section>
 
@@ -73,7 +71,6 @@ const Home = async ({searchParams : {category, endcursor}} : Props) => {
         hasPreviousPage={pagination.hasPreviousPage}
         hasNextPage={pagination.hasNextPage}
       />
-
     </section>
   );
 };

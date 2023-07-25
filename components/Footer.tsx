@@ -74,9 +74,7 @@ const Footer = () => {
       </div>
 
       <div className="flexBetween footer_copyright">
-        <p>
-          @ 2023 Flexibble. Todos direitos reservados
-        </p>
+        <p>@ 2023 Flexibble. Todos direitos reservados</p>
         <p className="text-gray">
           <span className="text-black font-semibold">
             1,223 Projetos Enviados

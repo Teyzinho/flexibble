@@ -15,15 +15,12 @@ const FormField = ({
   setState,
   isTextArea,
 }: Props) => {
-
   return (
     <div className="flexStart flex-col w-full gap-4">
-      <label className="w-full text-gray-100">
-        {title}
-      </label>
+      <label className="w-full text-gray-100">{title}</label>
 
       {isTextArea ? (
-        <textarea 
+        <textarea
           placeholder={placeholder}
           value={state}
           required
@@ -31,13 +28,14 @@ const FormField = ({
           onChange={(e) => setState(e.target.value)}
         />
       ) : (
-        <input 
-          type={type || 'text'}
+        <input
+          type={type || "text"}
           placeholder={placeholder}
           value={state}
           required
           className="form_field-input"
-          onChange={(e) => setState(e.target.value)}/>
+          onChange={(e) => setState(e.target.value)}
+        />
       )}
     </div>
   );

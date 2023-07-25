@@ -31,8 +31,8 @@ const Button = ({
         gap-3
         px-4 
         py-3 
-        ${isSubmitting ? 'bg-black/50' : bgColor || 'bg-primary-purple'}
-        ${textColor || 'text-white'}
+        ${isSubmitting ? "bg-black/50" : bgColor || "bg-primary-purple"}
+        ${textColor || "text-white"}
         rounded-xl
         text-sm
         font-medium
