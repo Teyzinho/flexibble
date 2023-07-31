@@ -26,4 +26,6 @@ Filtro de Pesquisas
   <img src="https://cloudinary-res.cloudinary.com/image/upload/website/cloudinary_web_favicon.png" width="25px"> Cloudinary Api: Para upload de Imagens
  </div>
 
-Projeto feito com aulas de JSmastery
+#
+
+--Projeto feito com aulas de JSmastery
